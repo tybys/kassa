@@ -4,6 +4,8 @@ import Ecom from './payments/ecom';
 import Mobile from './payments/mobile';
 import Other from './payments/other';
 
+import {connect} from 'react-redux';
+
 import jss from 'jss';
 import preset from 'jss-preset-default';
 

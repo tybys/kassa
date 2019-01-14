@@ -3,8 +3,8 @@ import jss from 'jss';
 import preset from 'jss-preset-default';
 
 import { createStore } from 'redux';
-
 import reducer from "../reducers";
+import {connect} from 'react-redux';
 
 import ChoosePayment from './steps/ChoosePayment';
 import Charge from './steps/Charge';
@@ -21,9 +21,6 @@ const styles = {
 	}
 };
 
-function Two() {
-	return 'Two'
-}
 function Three() {
 	return 'Three'
 }
@@ -31,7 +28,7 @@ function Three() {
 const { classes } = jss.createStyleSheet(styles).attach();
 const store = createStore(reducer);
 const step = (() => {
-	switch (store.getState().step[0].step) {
+	switch (store.getState().step.step) {
 		case 1:
 			return <ChoosePayment/>
 		case 2:
@@ -50,4 +47,7 @@ function Content() {
 	)
 }
 
-export default Content;
+export default connect(
+	state => ({}),
+	dispatch => ({})
+)(Content);

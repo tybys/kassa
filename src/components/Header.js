@@ -50,7 +50,7 @@ const crumbs = [
 	{title: 'Подтверждение'}
 ];
 const activeCrumb = (() => {
-	return store.getState().step[0].step - 1;
+	return store.getState().step.step - 1;
 })();
 
 function Header() {
@@ -66,7 +66,7 @@ function Header() {
 					<p className=''>оплата заказа в магазине</p>
 					<a href="#" className=''>Тестовый магазин</a>
 					&nbsp;
-					<span>{store.getState().step[0].orderAmount} рублей</span>
+					<span>{store.getState().step.orderAmount} рублей</span>
 				</div>
 			</div>
 
