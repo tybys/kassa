@@ -28,7 +28,7 @@ function Three() {
 const { classes } = jss.createStyleSheet(styles).attach();
 const store = createStore(reducer);
 const step = (() => {
-	switch (store.getState().step.step) {
+	switch (store.getState().step.number) {
 		case 1:
 			return <ChoosePayment/>
 		case 2:
@@ -41,13 +41,18 @@ const step = (() => {
 	}
 })();
 
-function Content() {
-	return (
-		<div>{step}</div>
-	)
+class Content extends Component {
+	render() {
+		return (
+			<div>{step}</div>
+		)
+	}
 }
 
-export default connect(
-	state => ({}),
+/*export default connect(
+	state => ({
+		testStore: state
+	}),
 	dispatch => ({})
-)(Content);
+)(Content);*/
+export default Content;

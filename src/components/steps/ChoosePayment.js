@@ -26,27 +26,35 @@ const styles = {
 
 const { classes } = jss.createStyleSheet(styles).attach();
 
-function ChoosePayment() {
-	return (
-		<div className={classes.wrapper}>
-			<div className={classes.column}>
-				<h4>Банковской картой</h4>
-				<Banks/>
+class ChoosePayment extends Component {
+	handle = () => {
+		console.log('ebana')
+	};
+
+	render() {
+		console.log('ChoosePayment')
+
+		return (
+			<div className={classes.wrapper}>
+				<div className={classes.column}>
+					<h4>Банковской картой</h4>
+					<Banks action={this.handle}/>
+				</div>
+				<div className={classes.column}>
+					<h4>Электронным кошельком</h4>
+					<Ecom/>
+				</div>
+				<div className={classes.column}>
+					<h4>Сотовые операторы</h4>
+					<Mobile/>
+				</div>
+				<div className={classes.column}>
+					<h4>Другие способы</h4>
+					<Other/>
+				</div>
 			</div>
-			<div className={classes.column}>
-				<h4>Электронным кошельком</h4>
-				<Ecom/>
-			</div>
-			<div className={classes.column}>
-				<h4>Сотовые операторы</h4>
-				<Mobile/>
-			</div>
-			<div className={classes.column}>
-				<h4>Другие способы</h4>
-				<Other/>
-			</div>
-		</div>
-	)
+		)
+	}
 }
 
 export default ChoosePayment;

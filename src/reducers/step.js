@@ -1,15 +1,14 @@
 import hash from '../helper';
 
 const initialState = {
-	step: 1,
+	number: 1,
 	orderAmount: 11
 };
 
 export default function step(state = initialState, action) {
 	switch (action.type) {
 		case 'CHOOSED_PAYMENT':
-			// debugger
-			return {...state, ...{step: (action.step)}}
+			return {...state, ...{step: (action.number)}};
 		default:
 			return state;
 	}
