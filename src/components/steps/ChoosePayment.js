@@ -27,18 +27,16 @@ const styles = {
 const { classes } = jss.createStyleSheet(styles).attach();
 
 class ChoosePayment extends Component {
-	handle = () => {
-		console.log('ebana')
+	someFnCb = (number) => {
+		this.props.callbackFromParent(number);
 	};
 
 	render() {
-		console.log('ChoosePayment')
-
 		return (
 			<div className={classes.wrapper}>
 				<div className={classes.column}>
 					<h4>Банковской картой</h4>
-					<Banks action={this.handle}/>
+					<Banks callbackFromMiddle={this.someFnCb} />
 				</div>
 				<div className={classes.column}>
 					<h4>Электронным кошельком</h4>

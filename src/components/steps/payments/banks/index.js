@@ -11,27 +11,31 @@ import stepAction, {nextStep} from '../../../../actions/step';
 const store = createStore(reducer);
 
 let handlePayment = (e) => {
-	e.preventDefault();
-
-	store.dispatch({
+	// e.preventDefault();
+// debugger
+	/*store.dispatch({
 		type: 'CHOOSED_PAYMENT',
 		payment_type: e.target.parentElement.dataset.type,
 		step: 2
-	});
+	});*/
 	// console.log(store.getState().step.step)
+	// debugger
+	e();
 };
 
 class Banks extends Component {
+	someFn = () => {
+		this.props.callbackFromMiddle('2');
+	};
+
 	render() {
-		console.log(this.props)
-		// debugger
 		return (
 			<div>
-				<a href="#" data-type="visa" onClick={handlePayment}>
+				<a href="#" data-type="visa" onClick={this.someFn}>
 					<img src={visa} width='200'/>
 				</a>
 
-				<a href="#" data-type="samsung" onClick={handlePayment}>
+				<a href="#" data-type="samsung">
 					<img src={samsung} width='200'/>
 				</a>
 			</div>
@@ -53,5 +57,5 @@ const mapDispatchesToProps = (dispatch) => {
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchesToProps)(Banks);
-//export default Banks;
+//export default connect(mapStateToProps, mapDispatchesToProps)(Banks);
+export default Banks;
