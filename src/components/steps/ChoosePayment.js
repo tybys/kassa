@@ -4,13 +4,10 @@ import Ecom from './payments/ecom';
 import Mobile from './payments/mobile';
 import Other from './payments/other';
 
-import {connect} from 'react-redux';
-
 import jss from 'jss';
 import preset from 'jss-preset-default';
 
 jss.setup(preset());
-
 const styles = {
 	wrapper: {
 		letterSpacing: -0.3
@@ -23,20 +20,17 @@ const styles = {
 		textAlign: 'center'
 	}
 };
-
 const { classes } = jss.createStyleSheet(styles).attach();
 
 class ChoosePayment extends Component {
-	someFnCb = (number) => {
-		this.props.callbackFromParent(number);
-	};
-
 	render() {
+		const {onComplete} = this.props;
+
 		return (
 			<div className={classes.wrapper}>
 				<div className={classes.column}>
 					<h4>Банковской картой</h4>
-					<Banks callbackFromMiddle={this.someFnCb} />
+					<Banks callbackFromMiddle={onComplete} />
 				</div>
 				<div className={classes.column}>
 					<h4>Электронным кошельком</h4>

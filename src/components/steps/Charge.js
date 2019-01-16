@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Cardui from '../cardui';
 
-import { createStore } from 'redux';
-import reducer from "../../reducers";
+// import { createStore } from 'redux';
+// import reducer from "../../reducers";
 
 import jss from 'jss';
 import preset from 'jss-preset-default';
@@ -27,15 +27,19 @@ const styles = {
 };
 
 const { classes } = jss.createStyleSheet(styles).attach();
-const store = createStore(reducer);
+// const store = createStore(reducer);
 
 function Charge() {
 	return (
 		<div>
-			Стоимость заказа:	<strong>{store.getState().step.orderAmount}</strong> рублей<br/>
+			Стоимость заказа:	<strong>
+			{/*{store.getState().step.orderAmount}*/}
+			</strong> рублей<br/>
 			Заплатить до:	<strong>14 января 8:50</strong><br/>
 			Описание заказа:	<strong>Оплата заказа в Тестовом магазине ROBOKASSA</strong><br/>
-			Итого к оплате:	<strong className={classes.green}>{store.getState().step.orderAmount} рублей</strong>
+			Итого к оплате:	<strong className={classes.green}>
+			{/*{store.getState().step.orderAmount} */}
+			рублей</strong>
 
 			<Cardui/>
 		</div>

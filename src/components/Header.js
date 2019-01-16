@@ -4,13 +4,13 @@ import jss from 'jss';
 import preset from 'jss-preset-default';
 
 import reducer from '../reducers';
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 jss.setup(preset());
 
-const store = createStore(reducer);
+// const store = createStore(reducer);
 const styles = {
 	toshop: {
 		float: 'left',
@@ -49,9 +49,9 @@ const crumbs = [
 	{title: 'Оплата счета'},
 	{title: 'Подтверждение'}
 ];
-const activeCrumb = (() => {
-	return store.getState().step.step - 1;
-})();
+// const activeCrumb = (() => {
+// 	return store.getState().step.step - 1;
+// })();
 
 function Header() {
 	return (
@@ -66,26 +66,33 @@ function Header() {
 					<p className=''>оплата заказа в магазине</p>
 					<a href="#" className=''>Тестовый магазин</a>
 					&nbsp;
-					<span>{store.getState().step.orderAmount} рублей</span>
+					{/*<span>{store.getState().step.orderAmount} рублей</span>*/}
 				</div>
 			</div>
 
 			<div>
-				<Router>
+				{/*<Router>*/}
 					<ul className={`${classes.breadcrumbs}`}>
 						{
 							crumbs.map((item, index) => {
-								let act = index === activeCrumb ? 'active' : '';
-								let bold = index === activeCrumb ? 'bold' : '';
-
+								// let act = index === activeCrumb ? 'active' : '';
+								// let bold = index === activeCrumb ? 'bold' : '';
+								// ${act}
 								return (
-									<li key={index} style={{fontWeight: bold}} className={`${classes.breadcrumbsLi} ${act}`}>{item.title}</li>
+									<li key={index}
+											// style={{fontWeight: bold}}
+											className={
+												`
+												${classes.breadcrumbsLi}
+
+												`
+											}>{item.title}</li>
 								);
 							})
 						}
 
 					</ul>
-				</Router>
+				{/*</Router>*/}
 			</div>
 		</div>
 	)

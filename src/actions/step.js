@@ -1,3 +1,8 @@
-export const nextStep = () => ({
-	type: 'CHOOSED_PAYMENT'
+export const nextStep = (number) => ({
+	type: 'ADD_STEP_NUMBER',
+	number: number
+});
+
+export const prevStep = () => ({
+	type: 'REMOVE_STEP_NUMBER'
 });

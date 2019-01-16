@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import jss from 'jss';
-import preset from 'jss-preset-default';
 
-import {bindActionCreators, createStore} from 'redux';
-import reducer from "../reducers";
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {nextStep, prevStep} from "../actions/step";
 
 import ChoosePayment from './steps/ChoosePayment';
 import Charge from './steps/Charge';
-import {nextStep} from "../actions/step";
+
+import jss from 'jss';
+import preset from 'jss-preset-default';
 
 jss.setup(preset());
-
 const styles = {
 	wrapper: {
 		width: 900,
@@ -21,67 +20,61 @@ const styles = {
 		boxShadow: '0 0 8px rgba(0,0,0,.5)'
 	}
 };
+const { classes } = jss.createStyleSheet(styles).attach();
 
 function Three() {
 	return 'Three'
 }
 
-const { classes } = jss.createStyleSheet(styles).attach();
-const store = createStore(reducer);
-const _step = () => {
-	switch (store.getState().step.number) {
-		case 1:
-			return <ChoosePayment/>
-		case 2:
-			return <Charge/>
-		case 3:
-			return <Three/>
-
-		default:
-			return <ChoosePayment/>
-	}
-}
-
 class Content extends Component {
-	myCallback = (dataFromChild) => {
-		console.log(dataFromChild);
+	handleAddStep = (dataFromChild) => {
+		const {number} = this.props.stepProp;
+		const {nextStepProp} = this.props;
 
+		nextStepProp(number);
+	};
+
+	handleResetStep = () => {
+		const {prevStepProp} = this.props;
+
+		prevStepProp();
 	};
 
 	step() {
-		switch (store.getState().step.number) {
+		switch (this.props.stepProp.number) {
 			case 1:
-				return <ChoosePayment callbackFromParent={this.myCallback} />
+				return <ChoosePayment onComplete={this.handleAddStep} />;
 			case 2:
-				return <Charge/>
+				return <Charge/>;
 			case 3:
 				return <Three/>
 
 			default:
-				return <ChoosePayment />
+				return <ChoosePayment onComplete={this.handleAddStep} />
 		}
 	}
 	render() {
 		return (
 			<div>
+				<button onClick={this.handleResetStep}>back</button>
 				{this.step()}
 			</div>
 		)
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		state
-	}
-};
+const getProps = (state) => ({
+	stepProp: state.step
+});
 
-const mapDispatchesToProps = (dispatch) => {
-	return {
-		dispatch
-		//,// это мы подключаем собственные actions
-		,actions: bindActionCreators(nextStep, dispatch),
-	}
-};
+const setActions = (dispatch) => bindActionCreators({
+	nextStepProp: nextStep,
+	prevStepProp: prevStep
+}, dispatch);
+/*
+functon() {
+	return dispatch(apply.this.call())
+}
+ */
 
-export default connect(mapStateToProps, mapDispatchesToProps)(Content);
+export default connect(getProps, setActions)(Content);
