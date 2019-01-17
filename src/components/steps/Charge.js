@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import Cardui from '../cardui';
 
-// import { createStore } from 'redux';
-// import reducer from "../../reducers";
-
 import jss from 'jss';
 import preset from 'jss-preset-default';
 
@@ -23,27 +20,34 @@ const styles = {
 	green: {
 		color: 'green',
 		fontSize: 20
+	},
+	carduiwrap: {
+		padding: '28px 34px'
 	}
 };
 
 const { classes } = jss.createStyleSheet(styles).attach();
-// const store = createStore(reducer);
 
-function Charge() {
-	return (
-		<div>
-			Стоимость заказа:	<strong>
-			{/*{store.getState().step.orderAmount}*/}
+class Charge extends Component {
+
+	render() {
+		const {onInit} = this.props;
+
+		return (
+			<div className={classes.carduiwrap}>
+				Стоимость заказа:	<strong>
+				{/*{store.getState().step.orderAmount}*/}
 			</strong> рублей<br/>
-			Заплатить до:	<strong>14 января 8:50</strong><br/>
-			Описание заказа:	<strong>Оплата заказа в Тестовом магазине ROBOKASSA</strong><br/>
-			Итого к оплате:	<strong className={classes.green}>
-			{/*{store.getState().step.orderAmount} */}
-			рублей</strong>
+				Заплатить до:	<strong>14 января 8:50</strong><br/>
+				Описание заказа:	<strong>Оплата заказа в Тестовом магазине ROBOKASSA</strong><br/>
+				Итого к оплате:	<strong className={classes.green}>
+				{/*{store.getState().step.orderAmount} */}
+				рублей</strong>
 
-			<Cardui/>
-		</div>
-	)
+				<Cardui validPay={onInit} />
+			</div>
+		)
+	}
 }
 
 export default Charge;

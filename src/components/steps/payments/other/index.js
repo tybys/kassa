@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import biocoin from './BioCoin.svg';
 
 function Other() {
 	return (
 		<div>
-			<a href="#">
-				<img src={biocoin} width='200' />
+			<a href="true">
+				<img src={biocoin} width='200' alt="b" />
 			</a>
 		</div>
 	)

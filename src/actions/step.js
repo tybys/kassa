@@ -6,3 +6,7 @@ export const nextStep = (number) => ({
 export const prevStep = () => ({
 	type: 'REMOVE_STEP_NUMBER'
 });
+
+export const getMoney = () => ({
+	type: 'GET_MONEY'
+});

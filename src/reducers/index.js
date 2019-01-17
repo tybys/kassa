@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 import step from './step';
-import payment from './payment';
+// import payment from './payment';
 
 const rootReducer = combineReducers({
 	step

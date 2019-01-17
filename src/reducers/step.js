@@ -15,6 +15,9 @@ export default function step(step = initialState, action) {
 		case 'REMOVE_STEP_NUMBER':
 			return initialState;
 
+		case 'GET_MONEY':
+			return step.orderAmount;
+
 		default:
 			return step;
 	}

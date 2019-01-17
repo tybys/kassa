@@ -3,20 +3,20 @@ import visa from './BankCard.svg';
 import samsung from './SamsungPay.svg';
 
 class Banks extends Component {
-	someFn = () => {
-		this.props.callbackFromMiddle();
+	triggerPayment= () => {
+		this.props.paymentType();
 	};
 
 	render() {
 		return (
 			<div>
-				<a href="#" data-type="visa" onClick={this.someFn}>
-					<img src={visa} width='200'/>
-				</a>
+				<button data-type="visa" onClick={this.triggerPayment}>
+					<img src={visa} width='200' alt="v"/>
+				</button>
 
-				<a href="#" data-type="samsung">
-					<img src={samsung} width='200'/>
-				</a>
+				<button data-type="samsung" onClick={this.triggerPayment}>
+					<img src={samsung} width='200' alt="s"/>
+				</button>
 			</div>
 		)
 	}

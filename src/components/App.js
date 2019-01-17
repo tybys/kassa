@@ -3,7 +3,7 @@ import jss from 'jss';
 import preset from 'jss-preset-default';
 
 import Header from './Header';
-import Content from './Content';
+import Content from '../containers/Content';
 
 jss.setup(preset());
 

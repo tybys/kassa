@@ -3,14 +3,14 @@ import ShopLogo from '../assets/70009.png';
 import jss from 'jss';
 import preset from 'jss-preset-default';
 
-import reducer from '../reducers';
-// import { createStore } from 'redux';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {getMoney} from "../actions/step";
 
 // import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 jss.setup(preset());
 
-// const store = createStore(reducer);
 const styles = {
 	toshop: {
 		float: 'left',
@@ -53,38 +53,42 @@ const crumbs = [
 // 	return store.getState().step.step - 1;
 // })();
 
-function Header() {
-	return (
-		<div>
-			<a href="#" className={classes.toshop}>Назад в магазин</a>
-			<a href="#" className={classes.login}>Вход в личный кабинет</a>
+class Header extends Component {
+	render() {
+		const {orderAmount} = this.props.stepMoneyProp;
+		const {number} = this.props.stepMoneyProp;
 
-			<div className={classes.head}>
-				<img src={ShopLogo} />
-
-				<div className={classes.description}>
-					<p className=''>оплата заказа в магазине</p>
-					<a href="#" className=''>Тестовый магазин</a>
-					&nbsp;
-					{/*<span>{store.getState().step.orderAmount} рублей</span>*/}
-				</div>
-			</div>
-
+		return (
 			<div>
-				{/*<Router>*/}
+				<a href="true" className={classes.toshop}>Назад в магазин</a>
+				<a href="true" className={classes.login}>Вход в личный кабинет</a>
+
+				<div className={classes.head}>
+					<img src={ShopLogo} alt="true" />
+
+					<div className={classes.description}>
+						<p className=''>оплата заказа в магазине</p>
+						<a href="true" className=''>Тестовый магазин</a>
+						&nbsp;
+						<span>{orderAmount} рублей</span>
+					</div>
+				</div>
+
+				<div>
+					{/*<Router>*/}
 					<ul className={`${classes.breadcrumbs}`}>
 						{
 							crumbs.map((item, index) => {
-								// let act = index === activeCrumb ? 'active' : '';
-								// let bold = index === activeCrumb ? 'bold' : '';
-								// ${act}
+								let act = index === (number - 1) ? 'active' : '';
+								let bold = index === (number - 1) ? 'bold' : '';
+								//
 								return (
 									<li key={index}
-											// style={{fontWeight: bold}}
+										style={{fontWeight: bold}}
 											className={
 												`
 												${classes.breadcrumbsLi}
-
+												${act}
 												`
 											}>{item.title}</li>
 								);
@@ -92,10 +96,19 @@ function Header() {
 						}
 
 					</ul>
-				{/*</Router>*/}
+					{/*</Router>*/}
+				</div>
 			</div>
-		</div>
-	)
+		)
+	}
 }
 
-export default Header;
+const getProps = (state) => ({
+	stepMoneyProp: state.step
+});
+
+const setActions = (dispatch) => bindActionCreators({
+	getMoneyProp: getMoney
+}, dispatch);
+
+export default connect(getProps, setActions)(Header);

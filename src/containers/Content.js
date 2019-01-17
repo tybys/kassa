@@ -4,14 +4,16 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {nextStep, prevStep} from "../actions/step";
 
-import ChoosePayment from './steps/ChoosePayment';
-import Charge from './steps/Charge';
+import ChoosePayment from '../components/steps/ChoosePayment';
+import Charge from '../components/steps/Charge';
+import Processing from '../components/Processing';
+import Success from '../components/Success';
 
 import jss from 'jss';
 import preset from 'jss-preset-default';
 
 jss.setup(preset());
-const styles = {
+/*const styles = {
 	wrapper: {
 		width: 900,
 		marginTop: 75,
@@ -19,12 +21,8 @@ const styles = {
 		marginRight: 'auto',
 		boxShadow: '0 0 8px rgba(0,0,0,.5)'
 	}
-};
-const { classes } = jss.createStyleSheet(styles).attach();
-
-function Three() {
-	return 'Three'
-}
+};*/
+//const { classes } = jss.createStyleSheet(styles).attach();
 
 class Content extends Component {
 	handleAddStep = (dataFromChild) => {
@@ -45,9 +43,12 @@ class Content extends Component {
 			case 1:
 				return <ChoosePayment onComplete={this.handleAddStep} />;
 			case 2:
-				return <Charge/>;
+				return <Charge onInit={this.handleAddStep} />;
 			case 3:
-				return <Three/>
+				return <Processing onReady={this.handleAddStep}/>;
+
+			case 4:
+				return <Success/>;
 
 			default:
 				return <ChoosePayment onComplete={this.handleAddStep} />
@@ -56,7 +57,7 @@ class Content extends Component {
 	render() {
 		return (
 			<div>
-				<button onClick={this.handleResetStep}>back</button>
+				{/*<button onClick={this.handleResetStep}>back</button>*/}
 				{this.step()}
 			</div>
 		)

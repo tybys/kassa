@@ -30,7 +30,7 @@ class ChoosePayment extends Component {
 			<div className={classes.wrapper}>
 				<div className={classes.column}>
 					<h4>Банковской картой</h4>
-					<Banks callbackFromMiddle={onComplete} />
+					<Banks paymentType={onComplete} />
 				</div>
 				<div className={classes.column}>
 					<h4>Электронным кошельком</h4>
