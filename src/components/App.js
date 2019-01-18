@@ -5,6 +5,9 @@ import preset from 'jss-preset-default';
 import Header from './Header';
 import Content from '../containers/Content';
 
+import _hist from '../_history';
+
+
 jss.setup(preset());
 
 const styles = {

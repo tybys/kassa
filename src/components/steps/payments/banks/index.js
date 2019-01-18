@@ -2,9 +2,13 @@ import React, {Component} from 'react';
 import visa from './BankCard.svg';
 import samsung from './SamsungPay.svg';
 
+import _hist from '../../../../_history';
+
 class Banks extends Component {
 	triggerPayment= () => {
 		this.props.paymentType();
+
+		_hist.push('/index/hash123hash321', {})
 	};
 
 	render() {

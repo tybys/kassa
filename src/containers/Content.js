@@ -43,7 +43,7 @@ class Content extends Component {
 			case 1:
 				return <ChoosePayment onComplete={this.handleAddStep} />;
 			case 2:
-				return <Charge onInit={this.handleAddStep} />;
+				return <Charge onInit={this.handleAddStep} order={this.props.stepProp.orderAmount} />;
 			case 3:
 				return <Processing onReady={this.handleAddStep}/>;
 
