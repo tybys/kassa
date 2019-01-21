@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import style from './style.css';
 import FormErrors from '../formErrors';
+import ControlError from '../ControlError';
 
 class Cardui extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			cardnumber: '',
+			_cardnumber: '',
 			expday: '',
 			expyear: '',
 			terms: false,
@@ -100,13 +101,13 @@ class Cardui extends Component {
 		let fieldValidationErrors = this.state.formErrors;
 
 		switch(fieldName) {
-			case 'cardnumber':
+			case '_cardnumber':
 				var regExpCard = /^[0-9][0-9- ]*$/i;
 				var chars = value.length;
 
-				this.setState({
+				//this.setState({
 					//cardnumber:value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ')
-				});
+				//});
 
 				if (chars === 0) {
 					tag.classList.remove('error');
@@ -126,12 +127,16 @@ class Cardui extends Component {
 				} else {
 					fieldValidationErrors.cardnumber = '';
 					tag.classList.remove('error');
+					this.setState({
+						cardnumberValid: true
+					})
 				}
 				break;
 
 			case 'terms':
 				this.setState({
-					terms: !this.state.terms//!this.state.terms ? true : false
+					terms: !this.state.terms,//!this.state.terms ? true : false
+					termsValid: !this.state.termsValid
 				});
 				break;
 
@@ -140,9 +145,8 @@ class Cardui extends Component {
 		}
 		this.setState({
 			formErrors: fieldValidationErrors,
-			cardnumberValid: true,
-			termsValid: true
-
+			// cardnumberValid: true,
+			// termsValid: true
 		}, this.validateForm);
 	}
 
@@ -151,66 +155,34 @@ class Cardui extends Component {
 			formValid: this.state.cardnumberValid && this.state.termsValid
 		});
 
-		console.log(this.state)
+		//console.log(this.state)
 	}
 
 	render() {
-		// const formValid = this.state.formValid ? '' : 'disabled';
-
 		return (
 			<div>
-				<FormErrors formErrors={this.state.formErrors}/>
+				{/*<FormErrors formErrors={this.state.formErrors}/>*/}
 
 				<div className="cardwrap">
 					<form action="">
 						<div className="cardfront">
-							<label htmlFor="">Номер карты</label>
-							<input maxLength={18} name="cardnumber" type="text" onChange={this.handleUserInput} value={this.state.cardnumber} placeholder="0000 0000 0000 0000" />
+
+							<label htmlFor="">
+								Номер карты
+								<ControlError controlError={this.state.formErrors.cardnumber} />
+							</label>
+
+							<input maxLength={18} name="_cardnumber" type="text" onChange={this.handleUserInput} value={this.state.cardnumber} placeholder="0000 0000 0000 0000" />
 							{/*пришлось сделать через фоновую пикчу, можно было бы как у тинькофф но мне было влом*/}
 							<span className={"brand "+this.state.brand}></span>
 
 							<label htmlFor="">Действительна до</label>
-							<select autoComplete="cc-exp-month" onChange={this.handleUserInput} id="SMonth" name="ExpMonth" className="selectBox" defaultValue="01">
+							<select disabled="disabled" autoComplete="cc-exp-month" id="SMonth" name="ExpMonth" className="selectBox" defaultValue="01">
 								<option value="01">01</option>
-								<option value="02">02</option>
-								<option value="03">03</option>
-								<option value="04">04</option>
-								<option value="05">05</option>
-								<option value="06">06</option>
-								<option value="07">07</option>
-								<option value="08">08</option>
-								<option value="09">09</option>
-								<option value="10">10</option>
-								<option value="11">11</option>
-								<option value="12">12</option>
 							</select>
 
-							<select autoComplete="cc-exp-year" onChange={this.handleUserInput} id="SYear" name="ExpYear" className="selectBox" defaultValue="2019">
+							<select disabled="disabled" autoComplete="cc-exp-year" id="SYear" name="ExpYear" className="selectBox" defaultValue="2019">
 								<option value="2019">2019</option>
-								<option value="2020">2020</option>
-								<option value="2021">2021</option>
-								<option value="2022">2022</option>
-								<option value="2023">2023</option>
-								<option value="2024">2024</option>
-								<option value="2025">2025</option>
-								<option value="2026">2026</option>
-								<option value="2027">2027</option>
-								<option value="2028">2028</option>
-								<option value="2029">2029</option>
-								<option value="2030">2030</option>
-								<option value="2031">2031</option>
-								<option value="2032">2032</option>
-								<option value="2033">2033</option>
-								<option value="2034">2034</option>
-								<option value="2035">2035</option>
-								<option value="2036">2036</option>
-								<option value="2037">2037</option>
-								<option value="2038">2038</option>
-								<option value="2039">2039</option>
-								<option value="2040">2040</option>
-								<option value="2041">2041</option>
-								<option value="2042">2042</option>
-								<option value="2043">2043</option>
 							</select>
 						</div>
 						<div className="cardback">
@@ -225,7 +197,7 @@ class Cardui extends Component {
 						</div>
 						<div>
 							<label className="terms" htmlFor="terms">
-								<input id="terms" type="checkbox" onChange={this.handleUserInput} defaultChecked={this.state.terms} />
+								<input name="terms" id="terms" type="checkbox" onChange={this.handleUserInput} defaultChecked={this.state.terms} />
 								Заявление-Распоряжение Плательщика
 							</label>
 						</div>

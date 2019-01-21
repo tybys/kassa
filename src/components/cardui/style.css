@@ -56,7 +56,7 @@ label.terms {
 	text-align: left;
 	padding-left: 30px;
 }
-input[name="cardnumber"] {
+input[name="_cardnumber"] {
 	width: 75%;
 	display: inline-block;
 }
@@ -84,6 +84,7 @@ input[name="cardnumber"] {
 	background: url("../../assets/brands/tink.png");
 }
 
+select[disabled],
 button[disabled],
 input[disabled] {
 	background: gainsboro;
