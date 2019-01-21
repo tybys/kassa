@@ -44,3 +44,75 @@ button:hover {
 	background-image: linear-gradient(to bottom, #2079b0, #eb94d0);
 	text-decoration: none;
 }
+
+label {
+	font-size: large;
+	font-weight: 500;
+	padding-bottom: 5px;
+}
+label.terms {
+	font-size: 16px;
+	font-weight: 400;
+	text-align: left;
+	padding-left: 30px;
+}
+input[name="cardnumber"] {
+	width: 75%;
+	display: inline-block;
+}
+.brand {
+	margin-left: 8px;
+	width: 48px;
+	height: 33px;
+	background: gray;
+	display: inline-block;
+	vertical-align: top;
+}
+.brand.empty {
+	background: url("../../assets/brands/empty.png");
+}
+.brand.alfa {
+	background: url("../../assets/brands/alfa.png");
+}
+.brand.otkr {
+	background: url("../../assets/brands/otkr.png");
+}
+.brand.sber {
+	background: url("../../assets/brands/sber.png");
+}
+.brand.tink {
+	background: url("../../assets/brands/tink.png");
+}
+
+button[disabled],
+input[disabled] {
+	background: gainsboro;
+	cursor: not-allowed;
+}
+input[type="checkbox"] {
+	vertical-align: middle;
+	margin-top: 0;
+	margin-right: 5px;
+	display: inline-block;
+}
+input[type="text"] {
+	height: 25px;
+	border-radius: 5px;
+	font-size: large;
+	font-weight: 100;
+	margin-bottom: 10px;
+}
+input[name="ccv"] {
+	width: 3em;
+}
+input.error {
+	border-color: #ccc;
+	border-color: rgba(236, 38, 5, 0.8);
+	outline: 0;
+	outline: thin dotted\9;
+	-webkit-box-shadow: 0 0 8px rgba(82,168,236,.6);
+	box-shadow: 0 0 8px rgba(236, 8, 5, 0.6);;
+}
+select {
+	height: 25px;
+}

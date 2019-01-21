@@ -10,72 +10,152 @@ class Cardui extends Component {
 			cardnumber: '',
 			expday: '',
 			expyear: '',
-			ccv: '',
-			email: '',
-			formErrors: {cardnumber: '', expday: '', expyear: '', ccv: '', email: ''},
+			terms: false,
+			formErrors: {cardnumber: '', terms: ''},
 			cardnumberValid: false,
-			expdayValid: false,
-			expyearValid: false,
-			ccvValid: false,
-			emailValid: false,
-			formValid: false
+			termsValid: false,
+			formValid: false,
+			brand: 'empty'
 		}
 	}
 	handleProcessing = () => {
-		this.props.validPay();
+		// this.props.validPay();
 	};
 	handleUserInput = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
+		const node = e.target;
 
-		this.setState({[name]: value},
-			() => { this.validateField(name, value) });
+		this.setState({
+				[name]: value
+			}, () => { this.validateField(name, value, node) });
 	};
 
-	validateField(fieldName, value) {
+	// украдено с википедии
+	static luhnAlgorithm(digits) {
+		let sum = 0;
+
+		for (let i = 0; i < digits.length; i++) {
+			let cardNum = parseInt(digits[i]);
+
+			if ((digits.length - i) % 2 === 0) {
+				cardNum = cardNum * 2;
+
+				if (cardNum > 9) {
+					cardNum = cardNum - 9;
+				}
+			}
+
+			sum += cardNum;
+		}
+
+		return sum % 10 === 0;
+	}
+
+	cardbrand(value) {
+		fetch(`https://lookup.binlist.net/${value}`)
+		// нет я не забыл тут стрелочную функию, через стрелочную ниже показан хипсто-выход из ситуации применения контекста ;)
+			.then(function (response) {
+				return response.json()
+			})
+			.then((data) => {
+				let brand = data.bank.name !== undefined ? data.bank.name.toLowerCase() : '';
+
+				// красота кода не главное
+				switch (true) {
+					case /sber/.test(brand):
+						this.setState({
+							brand: 'sber'
+						});
+						break;
+
+					case /alfa/.test(brand):
+						this.setState({
+							brand: 'alfa'
+						});
+						break;
+
+					case /tinkoff/.test(brand):
+						this.setState({
+							brand: 'tink'
+						});
+						break;
+					// типо открытие, апиха не читает хипсто-банки
+					case /' '/.test(brand):
+						this.setState({
+							brand: 'otkr'
+						});
+						break;
+
+					default:
+						this.setState({
+							brand: 'empty'
+						});
+						break;
+				}
+			});
+	}
+
+	validateField(fieldName, value, tag) {
 		let fieldValidationErrors = this.state.formErrors;
-		let emailValid = this.state.emailValid;
-		let passwordValid = this.state.passwordValid;
 
 		switch(fieldName) {
 			case 'cardnumber':
+				var regExpCard = /^[0-9][0-9- ]*$/i;
+				var chars = value.length;
 
+				this.setState({
+					//cardnumber:value.replace(/\W/gi, '').replace(/(.{4})/g, '$1 ')
+				});
+
+				if (chars === 0) {
+					tag.classList.remove('error');
+
+					this.setState({
+						brand: 'empty'
+					});
+				}
+
+				if (chars === 6) {
+					this.cardbrand(value);
+				}
+
+				if (!this.constructor.luhnAlgorithm(value)) {
+					fieldValidationErrors.cardnumber = 'is invalid';
+					tag.classList.add('error');
+				} else {
+					fieldValidationErrors.cardnumber = '';
+					tag.classList.remove('error');
+				}
 				break;
 
-			case 'expday':
-
-				break;
-
-			case 'expyear':
-
-				break;
-			case 'ccv':
-
-				break;
-			case 'email':
-				emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-				fieldValidationErrors.email = emailValid ? '' : ' is invalid';
-				break;
-
-			case 'password':
-				passwordValid = value.length >= 6;
-				fieldValidationErrors.password = passwordValid ? '': ' is too short';
+			case 'terms':
+				this.setState({
+					terms: !this.state.terms//!this.state.terms ? true : false
+				});
 				break;
 
 			default:
 				break;
 		}
-		this.setState({formErrors: fieldValidationErrors,
-			emailValid: emailValid,
-			passwordValid: passwordValid
+		this.setState({
+			formErrors: fieldValidationErrors,
+			cardnumberValid: true,
+			termsValid: true
+
 		}, this.validateForm);
 	}
+
 	validateForm() {
-		this.setState({formValid: this.state.emailValid &&
-				this.state.passwordValid});
+		this.setState({
+			formValid: this.state.cardnumberValid && this.state.termsValid
+		});
+
+		console.log(this.state)
 	}
 
 	render() {
+		// const formValid = this.state.formValid ? '' : 'disabled';
 
 		return (
 			<div>
@@ -85,7 +165,9 @@ class Cardui extends Component {
 					<form action="">
 						<div className="cardfront">
 							<label htmlFor="">Номер карты</label>
-							<input name="cardnumber" type="text" onChange={this.handleUserInput} value={this.state.cardnumber} placeholder="0000 0000 0000 0000" />
+							<input maxLength={18} name="cardnumber" type="text" onChange={this.handleUserInput} value={this.state.cardnumber} placeholder="0000 0000 0000 0000" />
+							{/*пришлось сделать через фоновую пикчу, можно было бы как у тинькофф но мне было влом*/}
+							<span className={"brand "+this.state.brand}></span>
 
 							<label htmlFor="">Действительна до</label>
 							<select autoComplete="cc-exp-month" onChange={this.handleUserInput} id="SMonth" name="ExpMonth" className="selectBox" defaultValue="01">
@@ -133,17 +215,19 @@ class Cardui extends Component {
 						</div>
 						<div className="cardback">
 							<label htmlFor="">CVC/CVV</label>
-							<input name="ccv" type="text" onChange={this.handleUserInput} value={this.state.ccv}/>
+							<input disabled="disabled" name="ccv" type="text" onChange={this.handleUserInput} value={this.state.ccv}/>
 						</div>
 						<div className="userinfo">
 							<label htmlFor="">Email</label>
-							<input name="email" type="text" onChange={this.handleUserInput} value={this.state.email} />
+							<input disabled="disabled" name="email" type="text" onChange={this.handleUserInput} value={this.state.email} />
 							<p>На этот email мы пришлем вам информацию о счете</p>
-							<button onClick={this.handleProcessing}>Оплатить</button>
+							<button disabled={!this.state.formValid} onClick={this.handleProcessing}>Оплатить</button>
 						</div>
 						<div>
-							<input type="checkbox"/>
-							<label htmlFor="">Заявление-Распоряжение Плательщика</label>
+							<label className="terms" htmlFor="terms">
+								<input id="terms" type="checkbox" onChange={this.handleUserInput} defaultChecked={this.state.terms} />
+								Заявление-Распоряжение Плательщика
+							</label>
 						</div>
 					</form>
 				</div>
