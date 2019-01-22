@@ -32,7 +32,7 @@ class Charge extends Component {
 	render() {
 		// const {orderAmount} = this.props.stepMoneyProp;
 		const {onInit} = this.props;
-		const {order} = this.props
+		const {order} = this.props;
 
 		return (
 			<div className={classes.carduiwrap}>
@@ -42,9 +42,10 @@ class Charge extends Component {
 				Заплатить до:	<strong>14 января 8:50</strong><br/>
 				Описание заказа:	<strong>Оплата заказа в Тестовом магазине ROBOKASSA</strong><br/>
 				<hr/>
-				Итого к оплате:	<strong className={classes.green}>
-				{order}
-				рублей</strong>
+				Итого к оплате:&nbsp;
+				<strong className={classes.green}>
+				{order}&nbsp;рублей
+				</strong>
 
 				<Cardui validPay={onInit} />
 			</div>

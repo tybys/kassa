@@ -30,6 +30,7 @@ class Content extends Component {
 		const {nextStepProp} = this.props;
 
 		nextStepProp(number);
+		console.log('some')
 	};
 
 	handleResetStep = () => {
@@ -55,6 +56,7 @@ class Content extends Component {
 		}
 	}
 	render() {
+		console.log(this.props.stepProp)
 		return (
 			<div>
 				{/*<button onClick={this.handleResetStep}>back</button>*/}

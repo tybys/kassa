@@ -8,28 +8,33 @@ class Cardui extends Component {
 		super(props);
 
 		this.state = {
+			//_cardnumber: '4276838029755214',
 			_cardnumber: '',
-			expday: '',
-			expyear: '',
 			terms: false,
 			formErrors: {cardnumber: '', terms: ''},
 			cardnumberValid: false,
-			termsValid: false,
-			formValid: false,
+			termsValid: true,
+			formValid: true,
 			brand: 'empty'
 		}
 	}
 	handleProcessing = () => {
-		// this.props.validPay();
+		this.props.validPay();
 	};
 	handleUserInput = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
 		const node = e.target;
 
+		if (this.state.formValid) {
+			this.props.validPay();
+		}
+
 		this.setState({
 				[name]: value
-			}, () => { this.validateField(name, value, node) });
+			}, () => {
+			this.validateField(name, value, node);
+		});
 	};
 
 	// украдено с википедии
@@ -172,7 +177,7 @@ class Cardui extends Component {
 								<ControlError controlError={this.state.formErrors.cardnumber} />
 							</label>
 
-							<input maxLength={18} name="_cardnumber" type="text" onChange={this.handleUserInput} value={this.state.cardnumber} placeholder="0000 0000 0000 0000" />
+							<input maxLength={18} name="_cardnumber" type="text" onChange={this.handleUserInput} value={this.state._cardnumber} placeholder="0000 0000 0000 0000" />
 							{/*пришлось сделать через фоновую пикчу, можно было бы как у тинькофф но мне было влом*/}
 							<span className={"brand "+this.state.brand}></span>
 
